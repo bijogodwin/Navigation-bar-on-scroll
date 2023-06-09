@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Creating a navigation bar" />
+    <title>Creating a Navigation bar</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      #navbar {
+        display: flex;
+        justify-content: space-around;
+        background-color: grey;
+        color: white;
+        height: 50px;
+      }
+
+      #navbar a {
+        text-decoration: none;
+        color: white;
+        line-height: 50px;
+      }
+
+      #navbar a.active {
+        background-color: #4caf50;
+      }
+
+      #navbar.sticky {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+
+      #main {
+        padding-top: 50px;
+      }
+
+      section {
+        height: 500px;
+        padding: 20px;
+        border-bottom: 1px solid black;
+      }
+
+      section#home {
+        background-color: rgb(218, 88, 88);
+      }
+
+      section#about {
+        background-color: rgb(158, 158, 51);
+      }
+
+      section#services {
+        background-color: rgb(154, 115, 43);
+      }
+
+      section#contact {
+        background-color: rgb(17, 184, 17);
+      }
+
+      #footer {
+        text-align: center;
+        padding: 10px;
+        background-color: #333;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="navbar">
+      <a href="#Home">Home</a>
+      <a href="#About">About</a>
+      <a href="#Services">Services</a>
+      <a href="#Contact">Contact</a>
+    </div>
+
+    <div id="main">
+      <section id="home">
+        <h1>Home</h1>
+        <p>This is the Home section.</p>
+      </section>
+      <section id="about">
+        <h1>About</h1>
+        <p>This is the About section.</p>
+      </section>
+      <section id="services">
+        <h1>Services</h1>
+        <p>This is the Services section.</p>
+      </section>
+      <section id="contact">
+        <h1>Contact</h1>
+        <p>This is the Contact section.</p>
+      </section>
+    </div>
+
+    <div id="footer"></div>
+
+    <script>
+      var navbar = document.getElementById("navbar");
+
+      var year = new Date().getFullYear();
+      document.getElementById("footer").innerHTML = "© " + year;
+
+      var initialPos = navbar.getBoundingClientRect().top;
+
+      window.addEventListener("scroll", function () {
+        var scrollPos = window.pageYOffset;
+
+        if (scrollPos > initialPos) {
+          navbar.classList.add("sticky");
+        } else {
+          navbar.classList.remove("sticky");
+        }
+      });
+
+      var links = navbar.getElementsByTagName("a");
+
+      for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener("click", function (event) {
+          event.preventDefault();
+
+          var target = document.getElementById(
+            this.href.slice(this.href.indexOf("#") + 1)
+          );
+
+          window.scrollTo({
+            top: target.offsetTop,
+            behavior: "smooth",
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
